@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Verificar argumento
+if [ "$1" == "-reinicio" ]; then
+    echo "Iniciando PostgreSQL..."
+    sudo service postgresql start
+
+    echo "Ejecutando reinicio.sql..."
+    psql -U dit -d dit -f BBDD/reinicio.sql
+
+elif [ "$1" == "-crear" ]; then
+    echo "Iniciando PostgreSQL..."
+    sudo service postgresql start
+
+    echo "Ejecutando reinicio.sql..."
+    psql -U dit -d dit -f BBDD/reinicio.sql
+
+    echo "Ejecutando data.sql..."
+    psql -U dit -d dit -f BBDD/data.sql
+
+    echo "Iniciando aplicación Spring Boot..."
+    mvn spring-boot:run
+
+else
+    echo "Uso: ./gestionar_app.sh -reinicio | -crear"
+fi
+
